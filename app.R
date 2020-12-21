@@ -1,4 +1,5 @@
-packages <-  c("shiny", "shinydashboard", "shinythemes", "shinycssloaders", "tidyverse","DT","plotly","readxl","rlang","shinyjs")
+packages <-  c("shiny", "shinydashboard", "shinythemes", "shinycssloaders", "tidyverse","DT","plotly",
+               "readxl","rlang","shinyjs","doParallel")
 inst <- packages %in% installed.packages()
 if (length(packages[!inst]) > 0) install.packages(packages[!inst])
 rm(inst,packages)
@@ -475,12 +476,10 @@ server <- function(input, output, session) {
         }
         
         theta = seq(-6,6,by=0.01)
-        library(parallel)
-        library(foreach)
         library(doParallel)
-        NumCore=detectCores(all.tests=FALSE, logical=TRUE)-2 # keep 2 cores idle to avoid getting a Alert from DAE
+        NumCore=detectCores(all.tests=FALSE, logical=TRUE)-2 # keep 2 cores idle
         registerDoParallel(cores=NumCore)
-        r <- foreach(1:NumCore, .packages = c('data.table', 'plyr', 'dplyr', 'tibble')) %dopar% {
+        r <- foreach(1:NumCore, .packages = c('dplyr', 'tibble')) %dopar% {
           source("./LW Function.R")
           source("./Item info_Function.R")
         }
