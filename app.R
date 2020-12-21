@@ -1,4 +1,4 @@
-packages <-  c("shiny", "shinydashboard", "shinythemes", "shinycssloaders", "tidyverse","tidyverse","DT","plotly","readxl","rlang","shinyjs")
+packages <-  c("shiny", "shinydashboard", "shinythemes", "shinycssloaders", "tidyverse","DT","plotly","readxl","rlang","shinyjs")
 inst <- packages %in% installed.packages()
 if (length(packages[!inst]) > 0) install.packages(packages[!inst])
 rm(inst,packages)
