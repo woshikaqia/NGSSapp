@@ -1,7 +1,13 @@
 packages <-  c("shiny", "shinydashboard", "shinythemes", "shinycssloaders", "tidyverse","DT","plotly",
                "readxl","rlang","shinyjs","doParallel")
-inst <- packages %in% installed.packages()
-if (length(packages[!inst]) > 0) install.packages(packages[!inst])
+inst <- packages[!packages %in% installed.packages()]
+if (length(inst)>0) {
+  inst_ok = switch(menu(c("Yes", "No"), 
+                        title = cat("The following packages and their dependencies will be installed.\n", 
+                                    paste0(inst, collapse = "\n"),"\n\nProceed?", sep = "")),
+                   TRUE, FALSE)
+  if (inst_ok) install.packages(inst) else stop("Aborted")
+}
 rm(inst,packages)
 
 options(scipen=999) 
